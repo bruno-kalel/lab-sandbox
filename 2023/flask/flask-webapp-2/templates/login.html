@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jogoteca</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='simple.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul id="messages" class="list-unstyled">
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <h1>Faça seu login</h1>
+    <form method="POST" action="{{ url_for('autenticar') }}">
+        <input type="hidden" name="next" value="{{ next }}">
+        {{ form.csrf_token() }}
+        <div>
+            {{ form.nickname.label(class="label") }}
+            {{ form.nickname(class="input") }}
+        </div>
+        <div>
+            {{ form.senha.label(class="label") }}
+            {{ form.senha(class="input") }}
+        </div>
+        <div>
+            {{ form.submit(class="button") }}
+            <a class="button" href="{{ url_for('index') }}">Voltar</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
